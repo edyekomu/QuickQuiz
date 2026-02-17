@@ -14,6 +14,15 @@ It is locally hosted for now, but will soon be pushed to Github Pages or Vercel.
 ### Uploading Data
 For now file uploads are not supported, it will be statically loaded as the file `quizData.js`. It accepts the following format:
 
+const quizData = [
+  {
+    question: string,
+    choices: string[],
+    correctIndex: int,
+    explanation: string,
+  }
+];
+
 **Example:**
 ```
 const quizData = [

@@ -7,7 +7,14 @@ const output = document.getElementById("output");
 
 uploadBtn.addEventListener("click", async () => {
   console.log("Upload button clicked");
+  const file = pdfUpload.files[0];
 
+  if (!file) {
+    alert("Please select a PDF file to upload.");
+    return;
+  }
+
+  console.log(file);
 });
 
 let score = 0;
