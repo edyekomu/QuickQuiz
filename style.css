@@ -1,0 +1,46 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 40px auto;
+  line-height: 1.6;
+}
+
+body h1 {
+    margin: auto;
+    text-align: center;
+}
+
+.question {
+  margin-bottom: 30px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.choice {
+  display: block;
+  margin: 8px 0;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.choice:hover {
+  background-color: #f0f0f0;
+}
+
+.correct {
+  background-color: #c8f7c5;
+  border-color: green;
+}
+
+.incorrect {
+  background-color: #f7c5c5;
+  border-color: red;
+}
+
+.explanation {
+  margin-top: 10px;
+  font-style: italic;
+}
