@@ -53,3 +53,8 @@ const quizData = [
 
 ### Hosting
 Hosting is currently local.
+
+## 🔮 Features to Add
+- PDF Notes Upload
+- JSON Questions Upload
+- Automatic AI Quiz Generation
