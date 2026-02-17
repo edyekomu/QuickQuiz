@@ -1,6 +1,15 @@
 const quizContainer = document.getElementById("quiz-container");
 const scoreContainer = document.getElementById("score-container");
 
+const uploadBtn = document.getElementById("upload-btn");
+const pdfUpload = document.getElementById("pdf-upload");
+const output = document.getElementById("output");
+
+uploadBtn.addEventListener("click", async () => {
+  console.log("Upload button clicked");
+
+});
+
 let score = 0;
 
 quizData.forEach((item, index) => {
