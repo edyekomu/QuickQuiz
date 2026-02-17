@@ -24,9 +24,10 @@ async def upload(file: UploadFile = File(...)):
   
     if file.filename == "":
         raise HTTPException(status_code=400, detail="No file selected")
-    
-    if file.content_type != "application/pdf":
-        raise HTTPException(status_code=400, detail="Incorrect filetype")
+
+    if (file.content_type != "application/pdf" and file.content_type != "application/json"):
+        raise HTTPException(status_code=400, 
+                            detail="Invalid file type. Only PDF and JSON files are allowed.")
 
     file_path = UPLOAD_DIR / file.filename
 
