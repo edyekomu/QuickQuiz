@@ -1,3 +1,4 @@
+// Quiz rendering logic
 function renderQuiz(quizData) {
   const scoreContainer = document.getElementById("score-container");
   const quizContainer = document.getElementById("quiz-container");
@@ -9,6 +10,7 @@ function renderQuiz(quizData) {
 
   quizData.forEach((item, index) => {
     const questionDiv = document.createElement("div");
+    questionDiv.id = `question-${index}`;
     questionDiv.className =
       "mb-6 p-4 rounded bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700";
 
@@ -25,7 +27,8 @@ function renderQuiz(quizData) {
         "block w-full text-left px-4 py-2 mb-2 rounded border " +
         "border-gray-300 dark:border-gray-600 " +
         "bg-gray-100 dark:bg-gray-800 " +
-        "hover:bg-gray-200 dark:hover:bg-gray-700 transition";
+        "hover:bg-gray-200 dark:hover:bg-gray-700 transition" +
+        "transition-colors duration-200 ease-in";
 
       choiceButton.addEventListener("click", () => {
         if (questionDiv.dataset.answered) return;
@@ -34,7 +37,14 @@ function renderQuiz(quizData) {
         const buttons = questionDiv.querySelectorAll("button");
 
         if (choiceIndex === item.correctIndex) {
-          choiceButton.classList.remove("bg-gray-100", "dark:bg-gray-800");
+          choiceButton.classList.remove(
+            "bg-gray-100", 
+            "dark:bg-gray-800",
+            "hover:bg-gray-200",
+            "dark:hover:bg-gray-700",
+            "transition"
+          );
+
           choiceButton.classList.add(
             "bg-green-500",
             "text-white",
@@ -42,7 +52,14 @@ function renderQuiz(quizData) {
           );
           score++;
         } else {
-          choiceButton.classList.remove("bg-gray-100", "dark:bg-gray-800");
+          choiceButton.classList.remove(
+            "bg-gray-100", 
+            "dark:bg-gray-800",
+            "hover:bg-gray-200",
+            "dark:hover:bg-gray-700",
+            "transition"
+          );
+
           choiceButton.classList.add(
             "bg-red-500",
             "text-white",
@@ -50,7 +67,13 @@ function renderQuiz(quizData) {
           );
 
           const correctBtn = buttons[item.correctIndex];
-          correctBtn.classList.remove("bg-gray-100", "dark:bg-gray-800");
+          correctBtn.classList.remove(
+            "bg-gray-100", 
+            "dark:bg-gray-800",
+            "hover:bg-gray-200",
+            "dark:hover:bg-gray-700",
+            "transition"
+          );
           correctBtn.classList.add(
             "bg-green-500",
             "text-white",
@@ -75,6 +98,16 @@ function renderQuiz(quizData) {
     quizContainer.appendChild(questionDiv);
   });
 }
+
+// Reset button logic
+const resetBtn = document.getElementById("reset-btn");
+resetBtn.addEventListener("click", () => {
+  const quizContainer = document.getElementById("quiz-container");
+  const scoreContainer = document.getElementById("score-container");
+
+  quizContainer.innerHTML = "";
+  scoreContainer.innerHTML = "";
+});
 
 // File upload logic
 const uploadBtn = document.getElementById("upload-btn");
