@@ -9,39 +9,64 @@ function renderQuiz(quizData) {
 
   quizData.forEach((item, index) => {
     const questionDiv = document.createElement("div");
-    questionDiv.classList.add("question");
+    questionDiv.className =
+      "mb-6 p-4 rounded bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700";
 
     const questionTitle = document.createElement("h3");
+    questionTitle.className = "font-semibold text-lg mb-3";
     questionTitle.textContent = `Q${index + 1}: ${item.question}`;
     questionDiv.appendChild(questionTitle);
 
     item.choices.forEach((choiceText, choiceIndex) => {
       const choiceButton = document.createElement("button");
       choiceButton.textContent = choiceText;
-      choiceButton.classList.add("choice");
+
+      choiceButton.className =
+        "block w-full text-left px-4 py-2 mb-2 rounded border " +
+        "border-gray-300 dark:border-gray-600 " +
+        "bg-gray-100 dark:bg-gray-800 " +
+        "hover:bg-gray-200 dark:hover:bg-gray-700 transition";
 
       choiceButton.addEventListener("click", () => {
-        // prevent multiple answers
-        if (questionDiv.classList.contains("answered")) 
-          return;
+        if (questionDiv.dataset.answered) return;
+        questionDiv.dataset.answered = "true";
 
-        questionDiv.classList.add("answered");
+        const buttons = questionDiv.querySelectorAll("button");
 
         if (choiceIndex === item.correctIndex) {
-          choiceButton.classList.add("correct");
+          choiceButton.classList.remove("bg-gray-100", "dark:bg-gray-800");
+          choiceButton.classList.add(
+            "bg-green-500",
+            "text-white",
+            "border-green-600"
+          );
           score++;
         } else {
-          choiceButton.classList.add("incorrect");
-          // highlight correct answer
-          questionDiv.querySelectorAll(".choice")[item.correctIndex].classList.add("correct");
+          choiceButton.classList.remove("bg-gray-100", "dark:bg-gray-800");
+          choiceButton.classList.add(
+            "bg-red-500",
+            "text-white",
+            "border-red-600"
+          );
+
+          const correctBtn = buttons[item.correctIndex];
+          correctBtn.classList.remove("bg-gray-100", "dark:bg-gray-800");
+          correctBtn.classList.add(
+            "bg-green-500",
+            "text-white",
+            "border-green-600"
+          );
         }
 
         const explanation = document.createElement("div");
-        explanation.classList.add("explanation");
+        explanation.className =
+          "mt-3 p-3 rounded bg-gray-100 dark:bg-gray-800 text-sm";
         explanation.textContent = "Explanation: " + item.explanation;
         questionDiv.appendChild(explanation);
 
         scoreContainer.textContent = `Score: ${score} / ${quizData.length}`;
+        scoreContainer.className =
+          "mt-4 text-lg font-semibold text-center";
       });
 
       questionDiv.appendChild(choiceButton);
@@ -51,12 +76,12 @@ function renderQuiz(quizData) {
   });
 }
 
+// File upload logic
 const uploadBtn = document.getElementById("upload-btn");
 const fileUpload = document.getElementById("file-upload");
 const output = document.getElementById("output");
 
-uploadBtn.addEventListener("click", async () => {
-  console.log("Upload button pressed!");
+uploadBtn.addEventListener("click", () => {
   const file = fileUpload.files[0];
 
   if (!file) {
@@ -66,17 +91,14 @@ uploadBtn.addEventListener("click", async () => {
 
   const reader = new FileReader();
 
-  reader.onload = function(event) {
+  reader.onload = (event) => {
     try {
-      console.log("File loaded successfully!");
       const quizData = JSON.parse(event.target.result);
       renderQuiz(quizData);
     } catch (error) {
-      console.error("Error parsing JSON: ", error);
+      console.error("Invalid JSON file:", error);
     }
-  }
+  };
 
   reader.readAsText(file);
-  
 });
-
